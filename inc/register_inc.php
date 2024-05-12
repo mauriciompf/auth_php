@@ -3,14 +3,14 @@
 require_once "validateEmail.php";
 require_once "validateInput.php";
 require_once "errorMessage.php";
+require_once "database.php";
 
 function processRegister(): void
 {
     try {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
             $username = validateInput("username", $_POST["username"]);
-            $email = validateInput("email", validateEmail($_POST["email"]));
+            $email = validateEmail($_POST["email"]);
             $password = validateInput("password", $_POST["password"]);
             $password2 = validateInput("password 2", $_POST["password2"]);
 
@@ -25,6 +25,8 @@ function processRegister(): void
 
             // Hash passwords
             $password_hashed = password_hash($password, PASSWORD_BCRYPT);
+
+            createDB();
         }
     } catch (Exception $e) {
         echo errorMessage($e->getMessage()) . "<br>";
