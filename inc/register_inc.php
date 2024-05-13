@@ -4,6 +4,8 @@ require_once "validateEmail.php";
 require_once "validateInput.php";
 require_once "errorMessage.php";
 require_once "database.php";
+// require_once "createTable.php";
+require_once "prepareData.php";
 
 function processRegister(): void
 {
@@ -26,11 +28,13 @@ function processRegister(): void
             // Hash passwords
             $password_hashed = password_hash($password, PASSWORD_BCRYPT);
 
-            createDB();
+            $conn = createDB();
+            prepareData($conn, $username, $email, $password_hashed);
         }
     } catch (Exception $e) {
         echo errorMessage($e->getMessage()) . "<br>";
     }
 }
 
+// createTable();
 processRegister();
