@@ -16,7 +16,7 @@ function prepareData($conn, $username, $email, $password)
         $stmt->bindParam(":password", $password);
         $stmt->execute();
 
-        echo "Inserted data successfully. <br>";
+        // echo "Inserted data successfully. <br>";
 
         $conn = null;
     } catch (PDOException $e) {
