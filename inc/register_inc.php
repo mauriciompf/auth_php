@@ -6,6 +6,19 @@ require_once "errorMessage.php";
 require_once "database.php";
 // require_once "createTable.php";
 require_once "prepareData.php";
+require_once "sendEmail.php";
+
+function isUserExist($conn, $username, $email)
+{
+    $sql = "SELECT COUNT(*)
+    FROM registration
+    WHERE username = :username OR email = :email";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(array(":username" => $username, ":email" => $email));
+    $result = $stmt->fetchColumn();
+
+    return $result > 0;
+}
 
 function processRegister(): void
 {
@@ -29,7 +42,15 @@ function processRegister(): void
             $password_hashed = password_hash($password, PASSWORD_BCRYPT);
 
             $conn = createDB();
+
+            if (isUserExist($conn, $username, $email)) {
+                throw new Exception("Username or email is already in database. <br>");
+            }
+
             prepareData($conn, $username, $email, $password_hashed);
+            sendEmail($_POST["email"], $username);
+
+            // header("Location: mainPage.php");
         }
     } catch (Exception $e) {
         echo errorMessage($e->getMessage()) . "<br>";
