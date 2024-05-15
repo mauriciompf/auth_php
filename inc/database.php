@@ -16,5 +16,6 @@ function createDB()
         return $conn;
     } catch (PDOException $e) {
         echo errorMessage("connection failed" . $e->getMessage());
+        return null;
     }
 }
