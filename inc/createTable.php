@@ -2,17 +2,13 @@
 
 require_once "database.php";
 require_once "errorMessage.php";
-$tableName = "registration";
-
 
 function createTable()
 {
     try {
         $conn = createDB();
 
-        global $tableName;
-
-        $sql = "CREATE TABLE IF NOT EXISTS $tableName (
+        $sql = "CREATE TABLE IF NOT EXISTS registration (
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(50) NOT NULL,
             email VARCHAR(255) NOT NULL,
@@ -21,10 +17,12 @@ function createTable()
         )";
 
         $conn->exec($sql);
-        echo "Table $tableName created successfully. <br>";
+        echo "Table registration created successfully. <br>";
 
-        if (!$conn->query($sql)) {
-            throw new PDOException("failed in create $tableName table. <br>");
+        $stmt = $conn->query("SHOW TABLES LIKE 'registration'");
+
+        if (!$stmt->rowCount()) {
+            throw new PDOException("Table 'registration' does not exist even after creation attempt. <br>");
         }
 
         $conn = null;
