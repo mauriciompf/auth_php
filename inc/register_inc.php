@@ -4,7 +4,7 @@ require_once "validateEmail.php";
 require_once "validateInput.php";
 require_once "errorMessage.php";
 require_once "database.php";
-// require_once "createTable.php";
+require_once "createTable.php";
 require_once "prepareData.php";
 require_once "sendEmail.php";
 
@@ -48,14 +48,13 @@ function processRegister(): void
             }
 
             prepareData($conn, $username, $email, $password_hashed);
-            sendEmail($_POST["email"], $username);
-
-            // header("Location: mainPage.php");
+            // sendEmail($_POST["email"], $username);
+            header("Location: mainPage.php");
         }
     } catch (Exception $e) {
         echo errorMessage($e->getMessage()) . "<br>";
     }
 }
 
-// createTable();
+createTable();
 processRegister();
