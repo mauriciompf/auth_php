@@ -25,7 +25,7 @@
                 <a href="register.php">Register</a>
             </section>
         </form>
-        <?php require_once "../inc/login_inc.php" ?>
+        <?php require_once "../inc/authentication.php" ?>
     </main>
 
 </body>
