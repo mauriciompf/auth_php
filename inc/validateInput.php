@@ -37,10 +37,12 @@ function validateInput(string $field, string $input)
         if (strlen($input) < 6) {
             throw new Exception($field . " should be at least 6 caracteres. <br>");
         }
-    }
 
-    // Sanitize input
-    return trim(htmlentities($input, ENT_QUOTES, "UTF-8"));
+        return $input;
+    } else {
+        // Sanitize input
+        return trim(htmlentities($input, ENT_QUOTES, "UTF-8"));
+    }
 }
 
 
