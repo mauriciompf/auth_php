@@ -25,6 +25,11 @@ function createTable()
             throw new PDOException("Table 'registration' does not exist even after creation attempt. <br>");
         }
 
+        $sql = "ALTER TABLE registration
+                MODIFY COLUMN password CHAR(60) NOT NULL";
+
+        $conn->exec($sql);
+
         $conn = null;
     } catch (PDOException $e) {
         echo errorMessage($e->getMessage());
