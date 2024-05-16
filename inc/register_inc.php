@@ -27,6 +27,8 @@ function processRegister(): void
             $username = validateInput("username", $_POST["username"]);
             $email = validateEmail($_POST["email"]);
             $password = validateInput("password", $_POST["password"]);
+            // $password = $_POST["password"];
+            // $password2 = $_POST["password2"];
             $password2 = validateInput("password 2", $_POST["password2"]);
 
             if (!isset($_POST["agree"]) || $_POST["agree"] !== "yes") {
