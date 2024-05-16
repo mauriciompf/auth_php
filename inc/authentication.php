@@ -23,8 +23,12 @@ function processLogin(): void
             $stmt->execute([$username]);
             $user = $stmt->fetch();
 
-            if (!$user && !password_verify($password, $user["password"])) {
-                throw new Exception("Invalid username or password");
+            if (!$user) {
+                throw new Exception("Invalid username. <br>");
+            }
+
+            if (!password_verify($password, $user["password"])) {
+                throw new Exception("Invalid password. <br>");
             }
 
             $_SESSION["id"] = $user["id"];
@@ -33,7 +37,7 @@ function processLogin(): void
             exit;
         }
     } catch (Exception $e) {
-        echo errorMessage($e->getMessage() .  ". <br>");
+        echo errorMessage($e->getMessage() .  " <br>");
     }
 }
 
